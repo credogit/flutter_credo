@@ -1,0 +1,28 @@
+name: flutter_credo
+description: This library allows for the easy integration of [Credo] into your Flutter application. It shoulders the burden of PCI compliance by sending credit card details directly to our servers rather than to your server.
+version: 0.0.1
+author: Charles Archibong<info@charlesarchibong.com>
+homepage: https://github.com/charlesarchibong/flutter_credo
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # To add assets to your package, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg

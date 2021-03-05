@@ -1,1 +1,1 @@
-export 'package:flutter_credo/src/core/errors/credo_exceptions.dart';
+export 'package:flutter_credo/core/errors/credo_exceptions.dart';

@@ -125,10 +125,11 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       body: map,
       secretKey: secretKey,
     );
+    print(response);
     return ThirdPartyPaymentResponseModel.fromMap(
-      response.data is Map<String, dynamic>
-          ? response.data
-          : Map<String, dynamic>.from(response.data),
+      response?.data is Map<String, dynamic>
+          ? response?.data
+          : Map<String, dynamic>.from(response?.data),
     );
   }
 

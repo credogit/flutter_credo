@@ -5,7 +5,7 @@ class ThirdPartyPaymentResponseModel extends ApiResponseModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'transactionRef': transactionRef,
+      'transRef': transactionRef,
     };
   }
 

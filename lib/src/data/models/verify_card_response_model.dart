@@ -17,7 +17,7 @@ class VerifyCardResponseModel extends ApiResponseModel {
       'gatewayRecommendation': gatewayRecommendation,
       'correlationId': correlationId,
       'timeOfRecord': timeOfRecord,
-      'redirectionHtml': redirectionHtml,
+      'redirectHtml': redirectionHtml,
     };
   }
 
@@ -28,7 +28,7 @@ class VerifyCardResponseModel extends ApiResponseModel {
     gatewayRecommendation = map['gatewayRecommendation'];
     correlationId = map['correlationId'];
     timeOfRecord = map['timeOfRecord'];
-    redirectionHtml = map['redirectionHtml'];
+    redirectionHtml = map['redirectHtml'];
   }
 
   VerifyCardResponseModel.fromErrorMap(Map<String, dynamic> map) {

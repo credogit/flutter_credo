@@ -3,6 +3,7 @@ import 'package:flutter_credo/core/network/http_service_requester.dart';
 import 'package:flutter_credo/src/data/data_source/remote_datasource.dart';
 import 'package:flutter_credo/src/data/models/init_payment_response_model.dart';
 import 'package:flutter_credo/src/data/models/third_party_payment_response_model.dart';
+import 'package:flutter_credo/src/data/models/verify_card_response_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -45,7 +46,7 @@ main() {
           ),
         );
 
-        InitPaymentResponseModel init =
+        InitPaymentResponseModel initPaymentResponseModel =
             await credoRemoteDataSourceImpl.initialPayment(
           amount: 200.00,
           currency: 'NGN',
@@ -59,7 +60,7 @@ main() {
         );
 
         expect(
-          init.toMap(),
+          initPaymentResponseModel.toMap(),
           equals(
             {'paymentLink': 'https://charlesarchibong.com'},
           ),
@@ -94,7 +95,7 @@ main() {
           ),
         );
 
-        ThirdPartyPaymentResponseModel init =
+        ThirdPartyPaymentResponseModel thirdPartyPaymentResponseModel =
             await credoRemoteDataSourceImpl.payThreeDs(
           amount: 1500.3,
           currency: 'NGN',
@@ -108,7 +109,7 @@ main() {
         );
 
         expect(
-          init.toMap(),
+          thirdPartyPaymentResponseModel.toMap(),
           equals({"transRef": "iy67f64hvc63"}),
         );
       });
@@ -144,7 +145,7 @@ main() {
           ),
         );
 
-        ThirdPartyPaymentResponseModel init =
+        ThirdPartyPaymentResponseModel thirdPartyPaymentResponseModel =
             await credoRemoteDataSourceImpl.thirdPartyPay(
           secretKey: "xxxxxxxxxxxxx",
           cardNumber: "5399670123490229",
@@ -161,8 +162,61 @@ main() {
         );
 
         expect(
-          init.toMap(),
+          thirdPartyPaymentResponseModel.toMap(),
           equals({"transRef": "iy67f64hvc63"}),
+        );
+      });
+    });
+
+    group('VerifyCardDetails', () {
+      test(
+          'should return valid API response ($VerifyCardResponseModel) when the response status is = 200',
+          () async {
+        Map map = {
+          "cardNumber": "4242424242424242",
+          "orderCurrency": "NGN",
+          "paymentSlug": "0H0UOEsawNjkIxgspANd"
+        };
+        when(
+          mockHttpServiceRequester.post(
+            endpoint: 'payments/card/third-party/3ds-verify-card-number',
+            body: map,
+            secretKey: 'xxxxxxxxxxxxx',
+          ),
+        ).thenAnswer(
+          (_) async => Response(
+            data: {
+              "orderId": "order-5reYwpe",
+              "transactionId": "8881038237uwe",
+              "gatewayCode": "string",
+              "gatewayRecommendation": "string",
+              "correlationId": "string",
+              "timeOfRecord": "string",
+              "redirectHtml": "string"
+            },
+            statusCode: 200,
+          ),
+        );
+
+        VerifyCardResponseModel verifyCardResponseModel =
+            await credoRemoteDataSourceImpl.verifyCardDetails(
+          secretKey: "xxxxxxxxxxxxx",
+          cardNumber: "4242424242424242",
+          orderCurrency: "NGN",
+          paymentSlug: "0H0UOEsawNjkIxgspANd",
+        );
+
+        expect(
+          verifyCardResponseModel.toMap(),
+          equals({
+            "orderId": "order-5reYwpe",
+            "transactionId": "8881038237uwe",
+            "gatewayCode": "string",
+            "gatewayRecommendation": "string",
+            "correlationId": "string",
+            "timeOfRecord": "string",
+            "redirectHtml": "string"
+          }),
         );
       });
     });

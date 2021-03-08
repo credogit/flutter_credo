@@ -4,9 +4,8 @@ import 'package:flutter_credo/core/constant/credo_constants.dart';
 
 class HttpServiceRequester with CredoConstants {
   Dio dio;
-  HttpServiceRequester({
-    @required this.dio,
-  }) {
+
+  HttpServiceRequester() {
     this.dio = Dio();
   }
 

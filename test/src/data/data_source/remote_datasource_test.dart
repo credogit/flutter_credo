@@ -4,6 +4,7 @@ import 'package:flutter_credo/src/data/data_source/remote_datasource.dart';
 import 'package:flutter_credo/src/data/models/init_payment_response_model.dart';
 import 'package:flutter_credo/src/data/models/third_party_payment_response_model.dart';
 import 'package:flutter_credo/src/data/models/verify_card_response_model.dart';
+import 'package:flutter_credo/src/data/models/verify_transaction_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -217,6 +218,59 @@ main() {
             "timeOfRecord": "string",
             "redirectHtml": "string"
           }),
+        );
+      });
+    });
+
+    group('VerifyTransaction', () {
+      test(
+          'should return valid API response ($VerifyTransactionResponseModel) when the response status is = 200',
+          () async {
+        Map map = {
+          "id": 4,
+          "completedAt": "2021-01-28T12:35:43",
+          "createdAt": "2021-01-28T12:35:43",
+          "customerEmail": "cirochwukunle@example.com",
+          "customerName": "Ciroma Chukwuma Adekunle",
+          "customerPhoneNo": "2348012345678",
+          "customerUuid": null,
+          "date": "2021-01-28",
+          "description": "Transaction",
+          "dueAmount": 100,
+          "merchantImsId": 154789685478965,
+          "merchantReferenceNo": "254655-4946-3634",
+          "processingFees": "1.5,",
+          "customerCharge": "0.0,",
+          "referenceNo": "order-URQiaJZRvd",
+          "totalAmount": 101.5,
+          "updatedAt": "2021-01-28T12:35:43",
+          "approvalStatus": {"name": "Accepted"},
+          "paymentChannel": {"name": "Card"},
+          "paymentStatus": {"name": "Successful"},
+          "paymentOption": {"name": "Regular"}
+        };
+        when(
+          mockHttpServiceRequester.getRequest(
+            endpoint: 'transactions/xxxxx124/verify',
+            queryParam: {},
+            secretKey: 'secretKey',
+          ),
+        ).thenAnswer(
+          (_) async => Response(
+            data: map,
+            statusCode: 200,
+          ),
+        );
+
+        VerifyTransactionResponseModel verifyTransactionResponseModel =
+            await credoRemoteDataSourceImpl.verifyTransaction(
+          secretKey: 'secretKey',
+          transactionRef: "xxxxx124",
+        );
+
+        expect(
+          verifyTransactionResponseModel.toMap(),
+          equals(map),
         );
       });
     });

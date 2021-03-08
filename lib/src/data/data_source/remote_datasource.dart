@@ -174,8 +174,8 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
 
   @override
   Future<VerifyCardResponseModel> verifyCardDetails({
-    String cardNumber,
-    String orderCurrency,
+    @required String cardNumber,
+    @required String orderCurrency,
     String paymentSlug,
     @required String secretKey,
   }) async {
@@ -198,10 +198,18 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
 
   @override
   Future<VerifyTransactionResponseModel> verifyTransaction({
-    String transactionRef,
+    @required String transactionRef,
     @required String secretKey,
-  }) {
-    // TODO: implement verifyTransaction
-    throw UnimplementedError();
+  }) async {
+    final Response response = await httpServiceRequester.getRequest(
+      endpoint: 'transactions/$transactionRef/verify',
+      queryParam: {},
+      secretKey: secretKey,
+    );
+    return VerifyTransactionResponseModel.fromMap(
+      response?.data is Map<String, dynamic>
+          ? response?.data
+          : Map<String, dynamic>.from(response?.data),
+    );
   }
 }

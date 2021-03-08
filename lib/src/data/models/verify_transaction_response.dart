@@ -23,6 +23,33 @@ class VerifyTransactionResponseModel extends ApiResponseModel {
   String paymentStatus;
   String paymentOption;
 
+  Map<String, dynamic> toMap() {
+    print(updatedAt.toIso8601String().split('.')[0]);
+    return {
+      'id': id,
+      'customerEmail': customerEmail,
+      'customerName': customerName,
+      'customerPhoneNo': customerPhoneNo,
+      'customerUuid': customerUuid,
+      'date': date.toString().split(' ')[0],
+      'description': description,
+      'dueAmount': dueAmount,
+      'merchantImsId': merchantImsId,
+      'merchantReferenceNo': merchantReferenceNo,
+      'processingFees': processingFees,
+      'customerCharge': customerCharge,
+      'referenceNo': referenceNo,
+      'totalAmount': totalAmount,
+      'updatedAt': updatedAt.toIso8601String().split('.')[0],
+      'completedAt': completedAt.toIso8601String().split('.')[0],
+      'createdAt': createdAt.toIso8601String().split('.')[0],
+      'approvalStatus': {"name": approvalStatus},
+      'paymentChannel': {"name": paymentChannel},
+      'paymentStatus': {"name": paymentStatus},
+      'paymentOption': {"name": paymentOption},
+    };
+  }
+
   VerifyTransactionResponseModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     customerEmail = map['customerEmail'];

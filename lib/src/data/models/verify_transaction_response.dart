@@ -41,10 +41,10 @@ class VerifyTransactionResponseModel extends ApiResponseModel {
     updatedAt = DateTime.parse(map['updatedAt']);
     completedAt = DateTime.parse(map['completedAt']);
     createdAt = DateTime.parse(map['createdAt']);
-    approvalStatus = map['approvalStatus'];
-    paymentChannel = map['paymentChannel'];
-    paymentStatus = map['paymentStatus'];
-    paymentOption = map['paymentOption'];
+    approvalStatus = map['approvalStatus']['name'];
+    paymentChannel = map['paymentChannel']['name'];
+    paymentStatus = map['paymentStatus']['name'];
+    paymentOption = map['paymentOption']['name'];
   }
 
   VerifyTransactionResponseModel.fromErrorMap(Map<String, dynamic> map) {

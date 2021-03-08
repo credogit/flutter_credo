@@ -123,7 +123,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
     final Response response = await httpServiceRequester.post(
       endpoint: 'payments/card/third-party/3ds-pay',
       body: map,
-      secretKey: '',
+      secretKey: secretKey,
     );
     return ThirdPartyPaymentResponseModel.fromMap(
       response.data is Map<String, dynamic>

@@ -147,9 +147,31 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
     String paymentSlug,
     @required String secretKey,
     double orderAmount,
-  }) {
-    // TODO: implement thirdPartyPay
-    throw UnimplementedError();
+  }) async {
+    Map map = {
+      "orderAmount": orderAmount,
+      "orderCurrency": orderCurrency,
+      "cardNumber": cardNumber,
+      "expiryMonth": expiryMonth,
+      "expiryYear": expiryYear,
+      "securityCode": securityCode,
+      "transRef": transRef,
+      "customerEmail": customerEmail,
+      "customerName": customerName,
+      "customerPhoneNo": customerPhoneNo,
+      "paymentSlug": paymentSlug,
+    };
+    final Response response = await httpServiceRequester.post(
+      endpoint: 'payments/card/third-party/pay',
+      body: map,
+      secretKey: secretKey,
+    );
+    print(response);
+    return ThirdPartyPaymentResponseModel.fromMap(
+      response?.data is Map<String, dynamic>
+          ? response?.data
+          : Map<String, dynamic>.from(response?.data),
+    );
   }
 
   @override

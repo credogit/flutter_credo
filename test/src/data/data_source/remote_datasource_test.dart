@@ -113,5 +113,58 @@ main() {
         );
       });
     });
+
+    group('PayWithCard', () {
+      test(
+          'should return valid API response ($ThirdPartyPaymentResponseModel) when the response status is = 200',
+          () async {
+        Map map = {
+          "orderAmount": 5000,
+          "orderCurrency": "NGN",
+          "cardNumber": "5399670123490229",
+          "expiryMonth": "05",
+          "expiryYear": "22",
+          "securityCode": "439",
+          "transRef": "iy67f64hvc63",
+          "customerEmail": "chunkylover53@aol.com",
+          "customerName": "King of Kings",
+          "customerPhoneNo": "+2348066282658",
+          "paymentSlug": "0H0UOEsawNjkIxgspANd"
+        };
+        when(
+          mockHttpServiceRequester.post(
+            endpoint: 'payments/card/third-party/pay',
+            body: map,
+            secretKey: 'xxxxxxxxxxxxx',
+          ),
+        ).thenAnswer(
+          (_) async => Response(
+            data: {"transRef": "iy67f64hvc63"},
+            statusCode: 200,
+          ),
+        );
+
+        ThirdPartyPaymentResponseModel init =
+            await credoRemoteDataSourceImpl.thirdPartyPay(
+          secretKey: "xxxxxxxxxxxxx",
+          cardNumber: "5399670123490229",
+          customerEmail: "chunkylover53@aol.com",
+          customerName: "King of Kings",
+          customerPhoneNo: "+2348066282658",
+          expiryMonth: "05",
+          expiryYear: "22",
+          securityCode: "439",
+          orderAmount: 5000,
+          orderCurrency: "NGN",
+          paymentSlug: "0H0UOEsawNjkIxgspANd",
+          transRef: 'iy67f64hvc63',
+        );
+
+        expect(
+          init.toMap(),
+          equals({"transRef": "iy67f64hvc63"}),
+        );
+      });
+    });
   });
 }

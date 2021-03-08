@@ -16,7 +16,7 @@ class HttpServiceRequester with CredoConstants {
     Map queryParam,
   }) async {
     dio.options.headers = headers;
-    dio.options.headers["Authorization"] = "Bearer $secretKey";
+    dio.options.headers["Authorization"] = "$secretKey";
     Response response = await dio.post(
       baseUrl + endpoint,
       data: body,
@@ -31,7 +31,7 @@ class HttpServiceRequester with CredoConstants {
     @required Map queryParam,
   }) async {
     dio.options.headers = headers;
-    dio.options.headers["Authorization"] = "Bearer $secretKey";
+    dio.options.headers["Authorization"] = "$secretKey";
 
     Response response = await dio.get(
       baseUrl + endpoint,

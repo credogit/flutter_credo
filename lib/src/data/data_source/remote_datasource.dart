@@ -12,14 +12,16 @@ abstract class CredoRemoteDataSource {
     @required String currency,
     String redirectUrl,
     @required String transactionRef,
-    String paymentOptions,
-    String customerEmail,
-    String customerName,
+    @required String paymentOptions,
+    @required String customerEmail,
+    @required String customerName,
     String customerPhoneNo,
+    @required String publicKey,
   });
 
   Future<VerifyTransactionResponseModel> verifyTransaction({
     @required String transactionRef,
+    @required String secretKey,
   });
 
   Future<ThirdPartyPaymentResponseModel> thirdPartyPay({
@@ -34,12 +36,14 @@ abstract class CredoRemoteDataSource {
     @required String customerPhoneNo,
     @required String paymentSlug,
     @required double orderAmount,
+    @required String secretKey,
   });
 
   Future<VerifyCardResponseModel> verifyCardDetails({
     @required String cardNumber,
     @required String orderCurrency,
     @required String paymentSlug,
+    @required String secretKey,
   });
 
   Future<ThirdPartyPaymentResponseModel> payThreeDs({
@@ -51,6 +55,7 @@ abstract class CredoRemoteDataSource {
     @required String customerPhoneNo,
     @required String redirectUrl,
     @required String paymentOptions,
+    @required String secretKey,
   });
 }
 
@@ -69,6 +74,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
     String customerEmail,
     String customerName,
     String customerPhoneNo,
+    @required String publicKey,
   }) async {
     Map map = {
       "amount": amount,
@@ -83,10 +89,8 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
     final Response response = await httpServiceRequester.post(
       endpoint: 'payments/initiate',
       body: map,
-      secretKey: '',
+      secretKey: publicKey,
     );
-    print(response.data.runtimeType);
-    print(response.data is Map<String, dynamic>);
     return InitPaymentResponseModel.fromMap(
       response.data is Map<String, dynamic>
           ? response.data
@@ -95,46 +99,74 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
   }
 
   @override
-  Future<ThirdPartyPaymentResponseModel> payThreeDs(
-      {double amount,
-      String currency,
-      String transRef,
-      String customerEmail,
-      String customerName,
-      String customerPhoneNo,
-      String redirectUrl,
-      String paymentOptions}) {
-    // TODO: implement payThreeDs
-    throw UnimplementedError();
+  Future<ThirdPartyPaymentResponseModel> payThreeDs({
+    double amount,
+    String currency,
+    String transRef,
+    String customerEmail,
+    String customerName,
+    String customerPhoneNo,
+    String redirectUrl,
+    String paymentOptions,
+    @required String secretKey,
+  }) async {
+    Map map = {
+      "amount": amount,
+      "currency": currency,
+      "redirectUrl": redirectUrl,
+      "transRef": transRef,
+      "paymentOptions": paymentOptions,
+      "customerEmail": customerEmail,
+      "customerName": customerName,
+      "customerPhoneNo": customerPhoneNo,
+    };
+    final Response response = await httpServiceRequester.post(
+      endpoint: 'payments/card/third-party/3ds-pay',
+      body: map,
+      secretKey: '',
+    );
+    return ThirdPartyPaymentResponseModel.fromMap(
+      response.data is Map<String, dynamic>
+          ? response.data
+          : Map<String, dynamic>.from(response.data),
+    );
   }
 
   @override
-  Future<ThirdPartyPaymentResponseModel> thirdPartyPay(
-      {String orderCurrency,
-      String cardNumber,
-      String expiryMonth,
-      String expiryYear,
-      String securityCode,
-      String transRef,
-      String customerEmail,
-      String customerName,
-      String customerPhoneNo,
-      String paymentSlug,
-      double orderAmount}) {
+  Future<ThirdPartyPaymentResponseModel> thirdPartyPay({
+    String orderCurrency,
+    String cardNumber,
+    String expiryMonth,
+    String expiryYear,
+    String securityCode,
+    String transRef,
+    String customerEmail,
+    String customerName,
+    String customerPhoneNo,
+    String paymentSlug,
+    @required String secretKey,
+    double orderAmount,
+  }) {
     // TODO: implement thirdPartyPay
     throw UnimplementedError();
   }
 
   @override
-  Future<VerifyCardResponseModel> verifyCardDetails(
-      {String cardNumber, String orderCurrency, String paymentSlug}) {
+  Future<VerifyCardResponseModel> verifyCardDetails({
+    String cardNumber,
+    String orderCurrency,
+    String paymentSlug,
+    @required String secretKey,
+  }) {
     // TODO: implement verifyCardDetails
     throw UnimplementedError();
   }
 
   @override
-  Future<VerifyTransactionResponseModel> verifyTransaction(
-      {String transactionRef}) {
+  Future<VerifyTransactionResponseModel> verifyTransaction({
+    String transactionRef,
+    @required String secretKey,
+  }) {
     // TODO: implement verifyTransaction
     throw UnimplementedError();
   }

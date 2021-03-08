@@ -29,13 +29,13 @@ main() {
           "paymentOptions": 'CARD',
           "customerEmail": 'info@charlesarchibong.com',
           "customerName": 'Charles Archibong',
-          "customerPhoneNo": '09039311229'
+          "customerPhoneNo": '09039311229',
         };
         when(
           mockHttpServiceRequester.post(
             endpoint: 'payments/initiate',
             body: map,
-            secretKey: '',
+            secretKey: 'xxxxxxxx',
           ),
         ).thenAnswer(
           (_) async => Response(
@@ -54,6 +54,7 @@ main() {
           paymentOptions: 'CARD',
           redirectUrl: 'https://charlesarchibong.com',
           transactionRef: '1243',
+          publicKey: 'xxxxxxxx',
         );
 
         expect(

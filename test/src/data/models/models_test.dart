@@ -15,10 +15,9 @@ main() {
       expect(initPaymentResponseModel, isA<ApiResponseModel>());
     });
 
-    test('Is $ThirdPartyPaymentResponseModel subclass of $ApiResponseModel',
-        () {
-      ThirdPartyPaymentResponseModel thirdPartyPayment =
-          ThirdPartyPaymentResponseModel.fromMap(
+    test('Is $ThirdPartyPaymentResponse subclass of $ApiResponseModel', () {
+      ThirdPartyPaymentResponse thirdPartyPayment =
+          ThirdPartyPaymentResponse.fromMap(
         {'transRef': 'xtx'},
       );
       expect(thirdPartyPayment, isA<ApiResponseModel>());

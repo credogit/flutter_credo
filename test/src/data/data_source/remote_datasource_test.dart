@@ -22,7 +22,7 @@ main() {
   group('$CredoRemoteDataSourceImpl', () {
     group('InitPayment', () {
       test(
-          'should return valid API response ($InitPaymentResponseModel) when the response status is = 200',
+          'should return valid API response ($InitPaymentResponse) when the response status is = 200',
           () async {
         Map map = {
           "amount": 200.00,
@@ -47,7 +47,7 @@ main() {
           ),
         );
 
-        InitPaymentResponseModel initPaymentResponseModel =
+        InitPaymentResponse initPaymentResponseModel =
             await credoRemoteDataSourceImpl.initialPayment(
           amount: 200.00,
           currency: 'NGN',
@@ -71,7 +71,7 @@ main() {
 
     group('PayThreeDS', () {
       test(
-          'should return valid API response ($ThirdPartyPaymentResponseModel) when the response status is = 200',
+          'should return valid API response ($ThirdPartyPaymentResponse) when the response status is = 200',
           () async {
         Map map = {
           "amount": 1500.3,
@@ -96,7 +96,7 @@ main() {
           ),
         );
 
-        ThirdPartyPaymentResponseModel thirdPartyPaymentResponseModel =
+        ThirdPartyPaymentResponse thirdPartyPaymentResponse =
             await credoRemoteDataSourceImpl.payThreeDs(
           amount: 1500.3,
           currency: 'NGN',
@@ -110,7 +110,7 @@ main() {
         );
 
         expect(
-          thirdPartyPaymentResponseModel.toMap(),
+          thirdPartyPaymentResponse.toMap(),
           equals({"transRef": "iy67f64hvc63"}),
         );
       });
@@ -118,7 +118,7 @@ main() {
 
     group('PayWithCard', () {
       test(
-          'should return valid API response ($ThirdPartyPaymentResponseModel) when the response status is = 200',
+          'should return valid API response ($ThirdPartyPaymentResponse) when the response status is = 200',
           () async {
         Map map = {
           "orderAmount": 5000,
@@ -146,7 +146,7 @@ main() {
           ),
         );
 
-        ThirdPartyPaymentResponseModel thirdPartyPaymentResponseModel =
+        ThirdPartyPaymentResponse thirdPartyPaymentResponse =
             await credoRemoteDataSourceImpl.thirdPartyPay(
           secretKey: "xxxxxxxxxxxxx",
           cardNumber: "5399670123490229",
@@ -163,7 +163,7 @@ main() {
         );
 
         expect(
-          thirdPartyPaymentResponseModel.toMap(),
+          thirdPartyPaymentResponse.toMap(),
           equals({"transRef": "iy67f64hvc63"}),
         );
       });
@@ -224,7 +224,7 @@ main() {
 
     group('VerifyTransaction', () {
       test(
-          'should return valid API response ($VerifyTransactionResponseModel) when the response status is = 200',
+          'should return valid API response ($VerifyTransactionResponse) when the response status is = 200',
           () async {
         Map map = {
           "id": 4,
@@ -262,7 +262,7 @@ main() {
           ),
         );
 
-        VerifyTransactionResponseModel verifyTransactionResponseModel =
+        VerifyTransactionResponse verifyTransactionResponseModel =
             await credoRemoteDataSourceImpl.verifyTransaction(
           secretKey: 'secretKey',
           transactionRef: "xxxxx124",

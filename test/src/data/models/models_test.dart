@@ -7,18 +7,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 main() {
   group('$ApiResponseModel', () {
-    test('Is $InitPaymentResponseModel subclass of $ApiResponseModel', () {
-      InitPaymentResponseModel initPaymentResponseModel =
-          InitPaymentResponseModel.fromMap(
+    test('Is $InitPaymentResponse subclass of $ApiResponseModel', () {
+      InitPaymentResponse initPaymentResponseModel =
+          InitPaymentResponse.fromMap(
         {'paymentLink': 'https://charlesarchibong.com'},
       );
       expect(initPaymentResponseModel, isA<ApiResponseModel>());
     });
 
-    test('Is $ThirdPartyPaymentResponseModel subclass of $ApiResponseModel',
-        () {
-      ThirdPartyPaymentResponseModel thirdPartyPayment =
-          ThirdPartyPaymentResponseModel.fromMap(
+    test('Is $ThirdPartyPaymentResponse subclass of $ApiResponseModel', () {
+      ThirdPartyPaymentResponse thirdPartyPayment =
+          ThirdPartyPaymentResponse.fromMap(
         {'transRef': 'xtx'},
       );
       expect(thirdPartyPayment, isA<ApiResponseModel>());
@@ -40,10 +39,9 @@ main() {
       expect(verifyCardResponseModel, isA<ApiResponseModel>());
     });
 
-    test('Is $VerifyTransactionResponseModel subclass of $ApiResponseModel',
-        () {
-      VerifyTransactionResponseModel verifyTransactionResponseModel =
-          VerifyTransactionResponseModel.fromMap(
+    test('Is $VerifyTransactionResponse subclass of $ApiResponseModel', () {
+      VerifyTransactionResponse verifyTransactionResponseModel =
+          VerifyTransactionResponse.fromMap(
         {
           "id": 4,
           "completedAt": "2021-01-28T12:35:43",

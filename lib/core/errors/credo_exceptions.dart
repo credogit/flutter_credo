@@ -39,10 +39,6 @@ class InvalidEmailException extends CredoException {
       : super(message: '$email  is not a valid email');
 }
 
-class PaystackSdkNotInitializedException extends CredoException {
-  PaystackSdkNotInitializedException(String message) : super(message: message);
-}
-
 class ProcessingException extends ChargeException {
   ProcessingException()
       : super(

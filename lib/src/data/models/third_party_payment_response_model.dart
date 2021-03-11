@@ -1,6 +1,6 @@
 import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
-class ThirdPartyPaymentResponseModel extends ApiResponseModel {
+class ThirdPartyPaymentResponse extends ApiResponseModel {
   String transactionRef;
 
   Map<String, dynamic> toMap() {
@@ -9,11 +9,11 @@ class ThirdPartyPaymentResponseModel extends ApiResponseModel {
     };
   }
 
-  ThirdPartyPaymentResponseModel.fromMap(Map<String, dynamic> map) {
+  ThirdPartyPaymentResponse.fromMap(Map<String, dynamic> map) {
     transactionRef = map['transRef'];
   }
 
-  ThirdPartyPaymentResponseModel.fromErrorMap(Map<String, dynamic> map) {
+  ThirdPartyPaymentResponse.fromErrorMap(Map<String, dynamic> map) {
     this.error = map['error'];
     this.status = map['status'];
     this.message = map['message'];
@@ -22,5 +22,5 @@ class ThirdPartyPaymentResponseModel extends ApiResponseModel {
 
   @override
   String toString() =>
-      'ThirdPartyPaymentResponseModel(transactionRef: $transactionRef, error: $error, status: $status, message:$message, path:$path)';
+      'ThirdPartyPaymentResponse(transactionRef: $transactionRef, error: $error, status: $status, message:$message, path:$path)';
 }

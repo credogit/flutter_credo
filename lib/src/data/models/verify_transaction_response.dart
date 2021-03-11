@@ -1,6 +1,6 @@
 import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
-class VerifyTransactionResponseModel extends ApiResponseModel {
+class VerifyTransactionResponse extends ApiResponseModel {
   int id;
   String customerEmail;
   String customerName;
@@ -50,7 +50,7 @@ class VerifyTransactionResponseModel extends ApiResponseModel {
     };
   }
 
-  VerifyTransactionResponseModel.fromMap(Map<String, dynamic> map) {
+  VerifyTransactionResponse.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     customerEmail = map['customerEmail'];
     customerName = map['customerName'];
@@ -74,7 +74,7 @@ class VerifyTransactionResponseModel extends ApiResponseModel {
     paymentOption = map['paymentOption']['name'];
   }
 
-  VerifyTransactionResponseModel.fromErrorMap(Map<String, dynamic> map) {
+  VerifyTransactionResponse.fromErrorMap(Map<String, dynamic> map) {
     this.error = map['error'];
     this.status = map['status'];
     this.message = map['message'];
@@ -83,6 +83,6 @@ class VerifyTransactionResponseModel extends ApiResponseModel {
 
   @override
   String toString() {
-    return 'VerifyTransactionResponseModel(id: $id, customerEmail: $customerEmail, customerName: $customerName, customerPhoneNo: $customerPhoneNo, customerUuid: $customerUuid, date: $date, description: $description, dueAmount: $dueAmount, merchantImsId: $merchantImsId, merchantReferenceNo: $merchantReferenceNo, processingFees: $processingFees, customerCharge: $customerCharge, referenceNo: $referenceNo, totalAmount: $totalAmount, updatedAt: $updatedAt, completedAt: $completedAt, createdAt: $createdAt, approvalStatus: $approvalStatus, paymentChannel: $paymentChannel, paymentStatus: $paymentStatus, paymentOption: $paymentOption,  error: $error, status: $status, message:$message, path:$path)';
+    return 'VerifyTransactionResponse(id: $id, customerEmail: $customerEmail, customerName: $customerName, customerPhoneNo: $customerPhoneNo, customerUuid: $customerUuid, date: $date, description: $description, dueAmount: $dueAmount, merchantImsId: $merchantImsId, merchantReferenceNo: $merchantReferenceNo, processingFees: $processingFees, customerCharge: $customerCharge, referenceNo: $referenceNo, totalAmount: $totalAmount, updatedAt: $updatedAt, completedAt: $completedAt, createdAt: $createdAt, approvalStatus: $approvalStatus, paymentChannel: $paymentChannel, paymentStatus: $paymentStatus, paymentOption: $paymentOption,  error: $error, status: $status, message:$message, path:$path)';
   }
 }

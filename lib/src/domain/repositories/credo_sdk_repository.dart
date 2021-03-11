@@ -20,7 +20,7 @@ class CredoSdkRepository {
     );
   }
 
-  Future<Either<CredoException, InitPaymentResponseModel>> initialPayment({
+  Future<Either<CredoException, InitPaymentResponse>> initialPayment({
     @required double amount,
     @required String currency,
     String redirectUrl,
@@ -32,7 +32,7 @@ class CredoSdkRepository {
     @required String publicKey,
   }) async {
     try {
-      InitPaymentResponseModel initPaymentResponseModel =
+      InitPaymentResponse initPaymentResponseModel =
           await credoRemoteDataSource.initialPayment(
         amount: amount,
         currency: currency,
@@ -49,7 +49,7 @@ class CredoSdkRepository {
       if (e is DioError) {
         return Left(
           CredoException(
-            message: InitPaymentResponseModel.fromErrorMap(
+            message: InitPaymentResponse.fromErrorMap(
               e.response.data,
             ).message,
           ),
@@ -159,13 +159,12 @@ class CredoSdkRepository {
     }
   }
 
-  Future<Either<CredoException, VerifyTransactionResponseModel>>
-      verifyTransaction({
+  Future<Either<CredoException, VerifyTransactionResponse>> verifyTransaction({
     @required String transactionRef,
     @required String secretKey,
   }) async {
     try {
-      VerifyTransactionResponseModel verifyTransactionResponseModel =
+      VerifyTransactionResponse verifyTransactionResponseModel =
           await credoRemoteDataSource.verifyTransaction(
         transactionRef: transactionRef,
         secretKey: secretKey,
@@ -175,7 +174,7 @@ class CredoSdkRepository {
       if (e is DioError) {
         return Left(
           CredoException(
-            message: VerifyTransactionResponseModel.fromErrorMap(
+            message: VerifyTransactionResponse.fromErrorMap(
               e.response.data,
             ).message,
           ),

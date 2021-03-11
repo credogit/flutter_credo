@@ -22,7 +22,7 @@ main() {
   group('$CredoRemoteDataSourceImpl', () {
     group('InitPayment', () {
       test(
-          'should return valid API response ($InitPaymentResponseModel) when the response status is = 200',
+          'should return valid API response ($InitPaymentResponse) when the response status is = 200',
           () async {
         Map map = {
           "amount": 200.00,
@@ -47,7 +47,7 @@ main() {
           ),
         );
 
-        InitPaymentResponseModel initPaymentResponseModel =
+        InitPaymentResponse initPaymentResponseModel =
             await credoRemoteDataSourceImpl.initialPayment(
           amount: 200.00,
           currency: 'NGN',
@@ -224,7 +224,7 @@ main() {
 
     group('VerifyTransaction', () {
       test(
-          'should return valid API response ($VerifyTransactionResponseModel) when the response status is = 200',
+          'should return valid API response ($VerifyTransactionResponse) when the response status is = 200',
           () async {
         Map map = {
           "id": 4,
@@ -262,7 +262,7 @@ main() {
           ),
         );
 
-        VerifyTransactionResponseModel verifyTransactionResponseModel =
+        VerifyTransactionResponse verifyTransactionResponseModel =
             await credoRemoteDataSourceImpl.verifyTransaction(
           secretKey: 'secretKey',
           transactionRef: "xxxxx124",

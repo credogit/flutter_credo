@@ -2,15 +2,18 @@ import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
 class InitPaymentResponseModel extends ApiResponseModel {
   String paymentLink;
+  String paymentSlug;
 
   Map<String, dynamic> toMap() {
     return {
       'paymentLink': paymentLink,
+      'paymentSlug': paymentSlug,
     };
   }
 
   InitPaymentResponseModel.fromMap(Map<String, dynamic> map) {
     this.paymentLink = map['paymentLink'];
+    this.paymentSlug = map['paymentSlug'];
   }
 
   InitPaymentResponseModel.fromErrorMap(Map<String, dynamic> map) {
@@ -22,5 +25,5 @@ class InitPaymentResponseModel extends ApiResponseModel {
 
   @override
   String toString() =>
-      'InitPaymentResponseModel(paymentLink: $paymentLink, error: $error, status: $status, message:$message, path:$path)';
+      'InitPaymentResponseModel(paymentLink: $paymentLink, error: $error, status: $status, message:$message, path:$path, paymentSlug:$paymentSlug)';
 }

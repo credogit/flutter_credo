@@ -24,7 +24,7 @@ abstract class CredoRemoteDataSource {
     @required String secretKey,
   });
 
-  Future<ThirdPartyPaymentResponseModel> thirdPartyPay({
+  Future<ThirdPartyPaymentResponse> thirdPartyPay({
     @required String orderCurrency,
     @required String cardNumber,
     @required String expiryMonth,
@@ -46,7 +46,7 @@ abstract class CredoRemoteDataSource {
     @required String secretKey,
   });
 
-  Future<ThirdPartyPaymentResponseModel> payThreeDs({
+  Future<ThirdPartyPaymentResponse> payThreeDs({
     @required double amount,
     @required String currency,
     @required String transRef,
@@ -99,7 +99,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
   }
 
   @override
-  Future<ThirdPartyPaymentResponseModel> payThreeDs({
+  Future<ThirdPartyPaymentResponse> payThreeDs({
     double amount,
     String currency,
     String transRef,
@@ -125,7 +125,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       body: map,
       secretKey: secretKey,
     );
-    return ThirdPartyPaymentResponseModel.fromMap(
+    return ThirdPartyPaymentResponse.fromMap(
       response?.data is Map<String, dynamic>
           ? response?.data
           : Map<String, dynamic>.from(response?.data),
@@ -133,7 +133,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
   }
 
   @override
-  Future<ThirdPartyPaymentResponseModel> thirdPartyPay({
+  Future<ThirdPartyPaymentResponse> thirdPartyPay({
     String orderCurrency,
     String cardNumber,
     String expiryMonth,
@@ -165,7 +165,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       body: map,
       secretKey: secretKey,
     );
-    return ThirdPartyPaymentResponseModel.fromMap(
+    return ThirdPartyPaymentResponse.fromMap(
       response?.data is Map<String, dynamic>
           ? response?.data
           : Map<String, dynamic>.from(response?.data),

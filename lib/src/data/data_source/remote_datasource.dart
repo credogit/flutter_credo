@@ -91,11 +91,11 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       body: map,
       secretKey: publicKey,
     );
-    return InitPaymentResponse.fromMap(
-      response.data is Map<String, dynamic>
-          ? response.data
-          : Map<String, dynamic>.from(response.data),
-    );
+    Map<String, dynamic> mapResponse = response.data is Map<String, dynamic>
+        ? response.data
+        : Map<String, dynamic>.from(response.data);
+    mapResponse['transRef'] = transactionRef;
+    return InitPaymentResponse.fromMap(mapResponse);
   }
 
   @override

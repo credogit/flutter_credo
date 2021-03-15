@@ -28,10 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  CredoPlugin credoPlugin = CredoPlugin(
-    publicKey: 'pk_demo-cKwtbsYaPNjgZZIFfznnZJGP49plbw.ujlZ0XcwAD-d',
-    secretKey: 'sk_demo-dQJJE9tFlunJv9jjZmJ49nyhqXKrbA.CchUPg1aqj-d',
-  );
+  CredoPlugin credoPlugin;
 
   Future<void> initPayment() async {
     try {
@@ -43,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         customerName: 'Charles Archibong',
         customerPhoneNo: '09039311559',
       );
+
       //Get payment slug from initial payment and use it to pay
       print(initial.toMap());
       ThirdPartyPaymentResponse thirdPartyPaymentResponse =
@@ -72,6 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    credoPlugin = CredoPlugin(
+      publicKey: 'pk_demo-cKwtbsYaPNjgZZIFfznnZJGP49plbw.ujlZ0XcwAD-d',
+      secretKey: 'sk_demo-dQJJE9tFlunJv9jjZmJ49nyhqXKrbA.CchUPg1aqj-d',
+    );
     initPayment();
     super.initState();
   }

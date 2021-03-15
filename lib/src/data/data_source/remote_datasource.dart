@@ -39,7 +39,7 @@ abstract class CredoRemoteDataSource {
     @required String secretKey,
   });
 
-  Future<VerifyCardResponseModel> verifyCardDetails({
+  Future<VerifyCardResponse> verifyCardDetails({
     @required String cardNumber,
     @required String orderCurrency,
     @required String paymentSlug,
@@ -173,7 +173,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
   }
 
   @override
-  Future<VerifyCardResponseModel> verifyCardDetails({
+  Future<VerifyCardResponse> verifyCardDetails({
     @required String cardNumber,
     @required String orderCurrency,
     String paymentSlug,
@@ -191,7 +191,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       secretKey: secretKey,
     );
 
-    return VerifyCardResponseModel.fromMap(
+    return VerifyCardResponse.fromMap(
       response?.data is Map<String, dynamic>
           ? response?.data
           : Map<String, dynamic>.from(response?.data),

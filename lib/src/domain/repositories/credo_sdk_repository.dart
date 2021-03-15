@@ -87,7 +87,7 @@ class CredoSdkRepository {
     double orderAmount,
   }) async {
     try {
-      VerifyCardResponseModel verifyCardResponseModel =
+      VerifyCardResponse verifyCardResponseModel =
           await credoRemoteDataSource.verifyCardDetails(
         cardNumber: cardNumber,
         orderCurrency: orderCurrency,
@@ -135,14 +135,14 @@ class CredoSdkRepository {
     }
   }
 
-  Future<Either<CredoException, VerifyCardResponseModel>> verifyCard({
+  Future<Either<CredoException, VerifyCardResponse>> verifyCard({
     @required String cardNumber,
     @required String orderCurrency,
     @required String paymentSlug,
     @required String secretKey,
   }) async {
     try {
-      VerifyCardResponseModel verifyCardResponseModel =
+      VerifyCardResponse verifyCardResponseModel =
           await credoRemoteDataSource.verifyCardDetails(
         cardNumber: cardNumber,
         orderCurrency: orderCurrency,
@@ -154,7 +154,7 @@ class CredoSdkRepository {
       if (e is DioError) {
         return Left(
           CredoException(
-            message: VerifyCardResponseModel.fromErrorMap(
+            message: VerifyCardResponse.fromErrorMap(
               e.response.data,
             ).message,
           ),

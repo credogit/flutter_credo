@@ -202,4 +202,42 @@ class CredoPlugin extends Equatable {
       return thirdPartyPaymentResponse;
     });
   }
+
+  /// Verify card details to ensure it's valid for payment
+  ///
+  ///
+  /// [cardNumber] - atm card number,
+  ///
+  /// [paymentSlug] - paymentSlug gotten after payment is initialized
+  ///
+  /// [orderCurrency] - The currency the transaction is operating on, eg [NGN]
+  ///
+  /// returns [VerifyCardResponse]
+  ///
+  /// throw  [CredoException] if any error is encountered
+
+  Future<VerifyCardResponse> verifyCard({
+    @required String cardNumber,
+    @required String paymentSlug,
+    @required String orderCurrency,
+  }) async {
+    assert(cardNumber != null, 'cardNumber must not be null');
+    assert(paymentSlug != null, 'paymentSlug must not be null');
+    assert(orderCurrency != null, 'orderCurrency must not be null');
+    _performChecks();
+
+    CredoSdkRepository credoSdkRepository = CredoSdkRepository();
+    final verified = await credoSdkRepository.verifyCard(
+      cardNumber: cardNumber,
+      orderCurrency: orderCurrency,
+      paymentSlug: paymentSlug,
+      secretKey: this.secretKey,
+    );
+
+    return verified.fold((CredoException credoException) {
+      throw credoException;
+    }, (VerifyCardResponse verifyCardResponse) {
+      return verifyCardResponse;
+    });
+  }
 }

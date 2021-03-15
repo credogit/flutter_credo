@@ -47,6 +47,13 @@ class CredoSdkRepository {
       return Right(initPaymentResponseModel);
     } catch (e) {
       if (e is DioError) {
+        if (e.response.statusCode >= 500) {
+          return Left(
+            CredoException(
+              message: 'Internal server error, please try again',
+            ),
+          );
+        }
         return Left(
           CredoException(
             message: InitPaymentResponse.fromErrorMap(

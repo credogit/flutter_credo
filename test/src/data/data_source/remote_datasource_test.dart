@@ -44,6 +44,7 @@ main() {
           (_) async => Response(
             data: {'paymentLink': 'https://charlesarchibong.com'},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/initiate'),
           ),
         );
 
@@ -63,7 +64,11 @@ main() {
         expect(
           initPaymentResponseModel.toMap(),
           equals(
-            {'paymentLink': 'https://charlesarchibong.com'},
+            {
+              'paymentLink': 'https://charlesarchibong.com',
+              'paymentSlug': null,
+              'transRef': '1243'
+            },
           ),
         );
       });
@@ -93,6 +98,7 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/card/third-party/3ds-pay'),
           ),
         );
 
@@ -143,6 +149,7 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/card/third-party/pay'),
           ),
         );
 
@@ -196,6 +203,8 @@ main() {
               "redirectHtml": "string"
             },
             statusCode: 200,
+            request: RequestOptions(
+                path: 'payments/card/third-party/3ds-verify-card-number'),
           ),
         );
 
@@ -257,9 +266,9 @@ main() {
           ),
         ).thenAnswer(
           (_) async => Response(
-            data: map,
-            statusCode: 200,
-          ),
+              data: map,
+              statusCode: 200,
+              request: RequestOptions(path: '/transactions/xxxxx124/verify')),
         );
 
         VerifyTransactionResponse verifyTransactionResponseModel =

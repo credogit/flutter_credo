@@ -39,7 +39,7 @@ abstract class CredoRemoteDataSource {
     @required String secretKey,
   });
 
-  Future<VerifyCardResponseModel> verifyCardDetails({
+  Future<VerifyCardResponse> verifyCardDetails({
     @required String cardNumber,
     @required String orderCurrency,
     @required String paymentSlug,
@@ -79,7 +79,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
     Map map = {
       "amount": amount,
       "currency": currency,
-      "redirectUrl": redirectUrl,
+      "redirectUrl": redirectUrl ?? '',
       "transRef": transactionRef,
       "paymentOptions": paymentOptions,
       "customerEmail": customerEmail,
@@ -91,11 +91,11 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       body: map,
       secretKey: publicKey,
     );
-    return InitPaymentResponse.fromMap(
-      response.data is Map<String, dynamic>
-          ? response.data
-          : Map<String, dynamic>.from(response.data),
-    );
+    Map<String, dynamic> mapResponse = response.data is Map<String, dynamic>
+        ? response.data
+        : Map<String, dynamic>.from(response.data);
+    mapResponse['transRef'] = transactionRef;
+    return InitPaymentResponse.fromMap(mapResponse);
   }
 
   @override
@@ -173,7 +173,7 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
   }
 
   @override
-  Future<VerifyCardResponseModel> verifyCardDetails({
+  Future<VerifyCardResponse> verifyCardDetails({
     @required String cardNumber,
     @required String orderCurrency,
     String paymentSlug,
@@ -184,12 +184,14 @@ class CredoRemoteDataSourceImpl implements CredoRemoteDataSource {
       "orderCurrency": orderCurrency,
       "paymentSlug": paymentSlug,
     };
+
     final Response response = await httpServiceRequester.post(
       endpoint: 'payments/card/third-party/3ds-verify-card-number',
       body: map,
       secretKey: secretKey,
     );
-    return VerifyCardResponseModel.fromMap(
+
+    return VerifyCardResponse.fromMap(
       response?.data is Map<String, dynamic>
           ? response?.data
           : Map<String, dynamic>.from(response?.data),

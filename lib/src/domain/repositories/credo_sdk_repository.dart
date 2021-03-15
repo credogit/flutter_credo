@@ -36,7 +36,9 @@ class CredoSdkRepository {
           await credoRemoteDataSource.initialPayment(
         amount: amount,
         currency: currency,
-        transactionRef: transactionRef ?? Utils.getRandomString(),
+        transactionRef: transactionRef == null || transactionRef.isEmpty
+            ? Utils.getRandomString()
+            : transactionRef,
         paymentOptions: paymentOptions,
         customerEmail: customerEmail,
         customerName: customerName,
@@ -47,6 +49,13 @@ class CredoSdkRepository {
       return Right(initPaymentResponseModel);
     } catch (e) {
       if (e is DioError) {
+        if (e.response.statusCode >= 500) {
+          return Left(
+            CredoException(
+              message: 'Internal server error, please try again',
+            ),
+          );
+        }
         return Left(
           CredoException(
             message: InitPaymentResponse.fromErrorMap(
@@ -78,7 +87,7 @@ class CredoSdkRepository {
     double orderAmount,
   }) async {
     try {
-      VerifyCardResponseModel verifyCardResponseModel =
+      VerifyCardResponse verifyCardResponseModel =
           await credoRemoteDataSource.verifyCardDetails(
         cardNumber: cardNumber,
         orderCurrency: orderCurrency,
@@ -126,14 +135,14 @@ class CredoSdkRepository {
     }
   }
 
-  Future<Either<CredoException, VerifyCardResponseModel>> verifyCard({
+  Future<Either<CredoException, VerifyCardResponse>> verifyCard({
     @required String cardNumber,
     @required String orderCurrency,
     @required String paymentSlug,
     @required String secretKey,
   }) async {
     try {
-      VerifyCardResponseModel verifyCardResponseModel =
+      VerifyCardResponse verifyCardResponseModel =
           await credoRemoteDataSource.verifyCardDetails(
         cardNumber: cardNumber,
         orderCurrency: orderCurrency,
@@ -145,7 +154,7 @@ class CredoSdkRepository {
       if (e is DioError) {
         return Left(
           CredoException(
-            message: VerifyCardResponseModel.fromErrorMap(
+            message: VerifyCardResponse.fromErrorMap(
               e.response.data,
             ).message,
           ),

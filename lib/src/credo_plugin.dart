@@ -9,7 +9,6 @@ import 'package:flutter_credo/src/data/models/third_party_payment_response_model
 import 'package:flutter_credo/src/domain/repositories/credo_sdk_repository.dart';
 
 class CredoPlugin extends Equatable {
-  static bool sdkInitialized = false;
   final String publicKey;
   final String secretKey;
 
@@ -23,34 +22,30 @@ class CredoPlugin extends Equatable {
   /// Please check [checkout] for more information
   ///
 
-  CredoPlugin({this.publicKey, this.secretKey});
+  CredoPlugin({@required this.publicKey, @required this.secretKey});
 
   @override
-  List<Object> get props => [publicKey, secretKey, sdkInitialized];
-
-  static bool get isSdkInitialized => sdkInitialized;
+  List<Object> get props => [publicKey, secretKey];
 
   String get getPublicKey {
     // Validate that the sdk has been initialized
-    Utils.validateSdkInitialized();
-    return publicKey;
+    _performChecks();
+    return this.publicKey;
   }
 
   String get getSecretKey {
     // Validate that the sdk has been initialized
-    Utils.validateSdkInitialized();
-    return secretKey;
+    _performChecks();
+    return this.secretKey;
   }
 
   void _performChecks() {
-    //validate that sdk has been initialized
-    Utils.validateSdkInitialized();
     //check for null value, and length and starts with pk_
-    if (publicKey == null || publicKey.isEmpty) {
+    if (this.publicKey == null || this.publicKey.isEmpty) {
       throw new CredoException(message: Utils.getKeyErrorMsg('public'));
     }
 
-    if (secretKey == null || secretKey.isEmpty) {
+    if (this.secretKey == null || this.secretKey.isEmpty) {
       throw new CredoException(message: Utils.getKeyErrorMsg('private'));
     }
   }
@@ -86,11 +81,8 @@ class CredoPlugin extends Equatable {
     @required String customerName,
     @required String customerPhoneNo,
   }) async {
-    assert(transactionRef != null, 'transRef must not be null');
     assert(amount != null, 'amount must not be null');
     assert(currency != null, 'currency must not be null');
-    assert(redirectUrl != null, 'redirectUrl must not be null');
-    assert(transactionRef != null, 'transRef must not be null');
     assert(customerEmail != null, 'customerEmail must not be null');
     assert(customerName != null, 'customerName must not be null');
     assert(customerPhoneNo != null, 'customerPhoneNo must not be null');
@@ -103,7 +95,10 @@ class CredoPlugin extends Equatable {
       customerEmail: customerEmail,
       customerName: customerName,
       customerPhoneNo: customerPhoneNo,
-      publicKey: publicKey,
+      publicKey: this.publicKey,
+      transactionRef: transactionRef,
+      paymentOptions: paymentOptions,
+      redirectUrl: redirectUrl,
     );
 
     return verified.fold((CredoException credoException) {
@@ -131,7 +126,7 @@ class CredoPlugin extends Equatable {
     CredoSdkRepository credoSdkRepository = CredoSdkRepository();
     final verified = await credoSdkRepository.verifyTransaction(
       transactionRef: transactionRef,
-      secretKey: secretKey,
+      secretKey: this.secretKey,
     );
 
     return verified.fold((CredoException credoException) {
@@ -205,6 +200,44 @@ class CredoPlugin extends Equatable {
       throw credoException;
     }, (ThirdPartyPaymentResponse thirdPartyPaymentResponse) {
       return thirdPartyPaymentResponse;
+    });
+  }
+
+  /// Verify card details to ensure it's valid for payment
+  ///
+  ///
+  /// [cardNumber] - atm card number,
+  ///
+  /// [paymentSlug] - paymentSlug gotten after payment is initialized
+  ///
+  /// [orderCurrency] - The currency the transaction is operating on, eg [NGN]
+  ///
+  /// returns [VerifyCardResponse]
+  ///
+  /// throw  [CredoException] if any error is encountered
+
+  Future<VerifyCardResponse> verifyCard({
+    @required String cardNumber,
+    @required String paymentSlug,
+    @required String orderCurrency,
+  }) async {
+    assert(cardNumber != null, 'cardNumber must not be null');
+    assert(paymentSlug != null, 'paymentSlug must not be null');
+    assert(orderCurrency != null, 'orderCurrency must not be null');
+    _performChecks();
+
+    CredoSdkRepository credoSdkRepository = CredoSdkRepository();
+    final verified = await credoSdkRepository.verifyCard(
+      cardNumber: cardNumber,
+      orderCurrency: orderCurrency,
+      paymentSlug: paymentSlug,
+      secretKey: this.secretKey,
+    );
+
+    return verified.fold((CredoException credoException) {
+      throw credoException;
+    }, (VerifyCardResponse verifyCardResponse) {
+      return verifyCardResponse;
     });
   }
 }

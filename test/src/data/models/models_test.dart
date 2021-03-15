@@ -23,9 +23,8 @@ main() {
       expect(thirdPartyPayment, isA<ApiResponseModel>());
     });
 
-    test('Is $VerifyCardResponseModel subclass of $ApiResponseModel', () {
-      VerifyCardResponseModel verifyCardResponseModel =
-          VerifyCardResponseModel.fromMap(
+    test('Is $VerifyCardResponse subclass of $ApiResponseModel', () {
+      VerifyCardResponse verifyCardResponseModel = VerifyCardResponse.fromMap(
         {
           'orderId': '12',
           'transactionId': 'xfr',

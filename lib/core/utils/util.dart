@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter_credo/src/credo_plugin.dart';
-import 'package:flutter_credo/core/errors/credo_exceptions.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
@@ -18,15 +16,6 @@ class Utils {
         ),
       ),
     );
-  }
-
-  static validateSdkInitialized() {
-    if (!CredoPlugin.isSdkInitialized) {
-      throw new CredoException(
-        message: 'Credo SDK has not been initialized. The SDK has'
-            ' to be initialized before use',
-      );
-    }
   }
 
   static String getKeyErrorMsg(String keyType) {

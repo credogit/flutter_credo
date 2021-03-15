@@ -171,7 +171,7 @@ main() {
 
     group('VerifyCardDetails', () {
       test(
-          'should return valid API response ($VerifyCardResponseModel) when the response status is = 200',
+          'should return valid API response ($VerifyCardResponse) when the response status is = 200',
           () async {
         Map map = {
           "cardNumber": "4242424242424242",
@@ -199,7 +199,7 @@ main() {
           ),
         );
 
-        VerifyCardResponseModel verifyCardResponseModel =
+        VerifyCardResponse verifyCardResponseModel =
             await credoRemoteDataSourceImpl.verifyCardDetails(
           secretKey: "xxxxxxxxxxxxx",
           cardNumber: "4242424242424242",

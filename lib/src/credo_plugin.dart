@@ -96,6 +96,9 @@ class CredoPlugin extends Equatable {
       customerName: customerName,
       customerPhoneNo: customerPhoneNo,
       publicKey: this.publicKey,
+      transactionRef: transactionRef,
+      paymentOptions: paymentOptions,
+      redirectUrl: redirectUrl,
     );
 
     return verified.fold((CredoException credoException) {

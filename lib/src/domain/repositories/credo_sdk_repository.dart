@@ -36,7 +36,9 @@ class CredoSdkRepository {
           await credoRemoteDataSource.initialPayment(
         amount: amount,
         currency: currency,
-        transactionRef: transactionRef ?? Utils.getRandomString(),
+        transactionRef: transactionRef == null || transactionRef.isEmpty
+            ? Utils.getRandomString()
+            : transactionRef,
         paymentOptions: paymentOptions,
         customerEmail: customerEmail,
         customerName: customerName,

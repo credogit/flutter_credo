@@ -11,8 +11,8 @@ import 'package:mockito/mockito.dart';
 class MockHttpServiceRequester extends Mock implements HttpServiceRequester {}
 
 main() {
-  MockHttpServiceRequester mockHttpServiceRequester;
-  CredoRemoteDataSourceImpl credoRemoteDataSourceImpl;
+  MockHttpServiceRequester? mockHttpServiceRequester;
+  late CredoRemoteDataSourceImpl credoRemoteDataSourceImpl;
   setUp(() {
     mockHttpServiceRequester = MockHttpServiceRequester();
     credoRemoteDataSourceImpl =
@@ -35,7 +35,7 @@ main() {
           "customerPhoneNo": '09039311229',
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/initiate',
             body: map,
             secretKey: 'xxxxxxxx',
@@ -89,7 +89,7 @@ main() {
           "customerPhoneNo": "2348012345678"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/3ds-pay',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
@@ -140,7 +140,7 @@ main() {
           "paymentSlug": "0H0UOEsawNjkIxgspANd"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/pay',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
@@ -186,25 +186,27 @@ main() {
           "paymentSlug": "0H0UOEsawNjkIxgspANd"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/3ds-verify-card-number',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
           ),
-        ).thenAnswer(
-          (_) async => Response(
-            data: {
-              "orderId": "order-5reYwpe",
-              "transactionId": "8881038237uwe",
-              "gatewayCode": "string",
-              "gatewayRecommendation": "string",
-              "correlationId": "string",
-              "timeOfRecord": "string",
-              "redirectHtml": "string"
-            },
-            statusCode: 200,
-            request: RequestOptions(
-                path: 'payments/card/third-party/3ds-verify-card-number'),
+        ).thenReturn(
+          Future.value(
+            Response(
+              data: {
+                "orderId": "order-5reYwpe",
+                "transactionId": "8881038237uwe",
+                "gatewayCode": "string",
+                "gatewayRecommendation": "string",
+                "correlationId": "string",
+                "timeOfRecord": "string",
+                "redirectHtml": "string"
+              },
+              statusCode: 200,
+              request: RequestOptions(
+                  path: 'payments/card/third-party/3ds-verify-card-number'),
+            ),
           ),
         );
 
@@ -259,7 +261,7 @@ main() {
           "paymentOption": {"name": "Regular"}
         };
         when(
-          mockHttpServiceRequester.getRequest(
+          mockHttpServiceRequester!.getRequest(
             endpoint: 'transactions/xxxxx124/verify',
             queryParam: {},
             secretKey: 'secretKey',

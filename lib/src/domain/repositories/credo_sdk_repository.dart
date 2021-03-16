@@ -9,10 +9,9 @@ import 'package:flutter_credo/src/data/models/init_payment_response_model.dart';
 import 'package:flutter_credo/src/data/models/third_party_payment_response_model.dart';
 import 'package:flutter_credo/src/data/models/verify_card_response_model.dart';
 import 'package:flutter_credo/src/data/models/verify_transaction_response.dart';
-import 'package:meta/meta.dart';
 
 class CredoSdkRepository {
-  CredoRemoteDataSource credoRemoteDataSource;
+  late CredoRemoteDataSource credoRemoteDataSource;
 
   CredoSdkRepository() {
     this.credoRemoteDataSource = CredoRemoteDataSourceImpl(
@@ -21,15 +20,15 @@ class CredoSdkRepository {
   }
 
   Future<Either<CredoException, InitPaymentResponse>> initialPayment({
-    @required double amount,
-    @required String currency,
-    String redirectUrl,
-    String transactionRef,
-    String paymentOptions,
-    @required String customerEmail,
-    @required String customerName,
-    @required String customerPhoneNo,
-    @required String publicKey,
+    required double amount,
+    required String currency,
+    String? redirectUrl,
+    String? transactionRef,
+    String? paymentOptions,
+    required String customerEmail,
+    required String customerName,
+    required String customerPhoneNo,
+    required String publicKey,
   }) async {
     try {
       InitPaymentResponse initPaymentResponseModel =
@@ -49,7 +48,7 @@ class CredoSdkRepository {
       return Right(initPaymentResponseModel);
     } catch (e) {
       if (e is DioError) {
-        if (e.response.statusCode >= 500) {
+        if (e.response!.statusCode! >= 500) {
           return Left(
             CredoException(
               message: 'Internal server error, please try again',
@@ -59,7 +58,7 @@ class CredoSdkRepository {
         return Left(
           CredoException(
             message: InitPaymentResponse.fromErrorMap(
-              e.response.data,
+              e.response!.data,
             ).message,
           ),
         );
@@ -73,18 +72,18 @@ class CredoSdkRepository {
   }
 
   Future<Either<CredoException, ThirdPartyPaymentResponse>> checkOut({
-    @required String orderCurrency,
-    @required String cardNumber,
-    @required String expiryMonth,
-    @required String expiryYear,
-    @required String securityCode,
-    @required String transRef,
-    String customerEmail,
-    String customerName,
-    String customerPhoneNo,
-    @required String paymentSlug,
-    @required String secretKey,
-    double orderAmount,
+    required String orderCurrency,
+    required String cardNumber,
+    required String expiryMonth,
+    required String expiryYear,
+    required String securityCode,
+    required String transRef,
+    String? customerEmail,
+    String? customerName,
+    String? customerPhoneNo,
+    required String? paymentSlug,
+    required String secretKey,
+    double? orderAmount,
   }) async {
     try {
       VerifyCardResponse verifyCardResponseModel =
@@ -120,7 +119,7 @@ class CredoSdkRepository {
         return Left(
           CredoException(
             message: ThirdPartyPaymentResponse.fromErrorMap(
-              e.response.data,
+              e.response!.data,
             ).message,
           ),
         );
@@ -136,10 +135,10 @@ class CredoSdkRepository {
   }
 
   Future<Either<CredoException, VerifyCardResponse>> verifyCard({
-    @required String cardNumber,
-    @required String orderCurrency,
-    @required String paymentSlug,
-    @required String secretKey,
+    required String cardNumber,
+    required String orderCurrency,
+    required String paymentSlug,
+    required String secretKey,
   }) async {
     try {
       VerifyCardResponse verifyCardResponseModel =
@@ -155,7 +154,7 @@ class CredoSdkRepository {
         return Left(
           CredoException(
             message: VerifyCardResponse.fromErrorMap(
-              e.response.data,
+              e.response!.data,
             ).message,
           ),
         );
@@ -169,8 +168,8 @@ class CredoSdkRepository {
   }
 
   Future<Either<CredoException, VerifyTransactionResponse>> verifyTransaction({
-    @required String transactionRef,
-    @required String secretKey,
+    required String transactionRef,
+    required String secretKey,
   }) async {
     try {
       VerifyTransactionResponse verifyTransactionResponseModel =
@@ -184,7 +183,7 @@ class CredoSdkRepository {
         return Left(
           CredoException(
             message: VerifyTransactionResponse.fromErrorMap(
-              e.response.data,
+              e.response!.data,
             ).message,
           ),
         );

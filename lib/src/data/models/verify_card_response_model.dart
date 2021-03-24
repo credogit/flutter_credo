@@ -1,13 +1,13 @@
 import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
 class VerifyCardResponse extends ApiResponseModel {
-  String orderId;
-  String transactionId;
-  String gatewayCode;
-  String gatewayRecommendation;
-  String correlationId;
-  String timeOfRecord;
-  String redirectionHtml;
+  String? orderId;
+  String? transactionId;
+  String? gatewayCode;
+  String? gatewayRecommendation;
+  String? correlationId;
+  String? timeOfRecord;
+  String? redirectionHtml;
 
   Map<String, dynamic> toMap() {
     return {

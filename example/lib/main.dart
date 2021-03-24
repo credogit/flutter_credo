@@ -13,27 +13,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Credo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  CredoPlugin credoPlugin;
+  CredoPlugin? credoPlugin;
 
   Future<void> initPayment() async {
     try {
       print('Initial payment with credo');
-      InitPaymentResponse initial = await credoPlugin.initialPayment(
+      InitPaymentResponse initial = await credoPlugin!.initialPayment(
         amount: 100.0,
         currency: 'NGN',
         customerEmail: 'charlesarchibong10@gmail.com',
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //Get payment slug from initial payment and use it to pay
       print(initial.toMap());
       ThirdPartyPaymentResponse thirdPartyPaymentResponse =
-          await credoPlugin.pay(
+          await credoPlugin!.pay(
         orderCurrency: 'NGN',
         cardNumber: '',
         expiryMonth: '07',
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Credo'),
       ),
       body: Center(
         child: Column(

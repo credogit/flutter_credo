@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_credo/core/errors/credo_exceptions.dart';
 import 'package:flutter_credo/core/utils/util.dart';
 import 'package:flutter_credo/flutter_credo.dart';
@@ -22,7 +21,7 @@ class CredoPlugin extends Equatable {
   /// Please check [checkout] for more information
   ///
 
-  CredoPlugin({@required this.publicKey, @required this.secretKey});
+  CredoPlugin({required this.publicKey, required this.secretKey});
 
   @override
   List<Object> get props => [publicKey, secretKey];
@@ -41,11 +40,11 @@ class CredoPlugin extends Equatable {
 
   void _performChecks() {
     //check for null value, and length and starts with pk_
-    if (this.publicKey == null || this.publicKey.isEmpty) {
+    if (this.publicKey.isEmpty) {
       throw new CredoException(message: Utils.getKeyErrorMsg('public'));
     }
 
-    if (this.secretKey == null || this.secretKey.isEmpty) {
+    if (this.secretKey.isEmpty) {
       throw new CredoException(message: Utils.getKeyErrorMsg('private'));
     }
   }
@@ -72,20 +71,15 @@ class CredoPlugin extends Equatable {
   /// throw  [CredoException] if any error is encountered
 
   Future<InitPaymentResponse> initialPayment({
-    @required double amount,
-    @required String currency,
-    String redirectUrl,
-    String transactionRef,
-    String paymentOptions,
-    @required String customerEmail,
-    @required String customerName,
-    @required String customerPhoneNo,
+    required double amount,
+    required String currency,
+    String? redirectUrl,
+    String? transactionRef,
+    String? paymentOptions,
+    required String customerEmail,
+    required String customerName,
+    required String customerPhoneNo,
   }) async {
-    assert(amount != null, 'amount must not be null');
-    assert(currency != null, 'currency must not be null');
-    assert(customerEmail != null, 'customerEmail must not be null');
-    assert(customerName != null, 'customerName must not be null');
-    assert(customerPhoneNo != null, 'customerPhoneNo must not be null');
     _performChecks();
 
     CredoSdkRepository credoSdkRepository = CredoSdkRepository();
@@ -118,9 +112,8 @@ class CredoPlugin extends Equatable {
   /// throw  [CredoException] if any error is encountered
 
   Future<VerifyTransactionResponse> verifyTransaction({
-    @required String transactionRef,
+    required String transactionRef,
   }) async {
-    assert(transactionRef != null, 'transRef must not be null');
     _performChecks();
 
     CredoSdkRepository credoSdkRepository = CredoSdkRepository();
@@ -164,24 +157,18 @@ class CredoPlugin extends Equatable {
   /// throw  [CredoException] if any error is encountered
 
   Future<ThirdPartyPaymentResponse> pay({
-    @required String orderCurrency,
-    @required String cardNumber,
-    @required String expiryMonth,
-    @required String expiryYear,
-    @required String securityCode,
-    @required String transRef,
-    String customerEmail,
-    String customerName,
-    String customerPhoneNo,
-    @required String paymentSlug,
-    @required double orderAmount,
+    required String orderCurrency,
+    required String cardNumber,
+    required String expiryMonth,
+    required String expiryYear,
+    required String securityCode,
+    required String transRef,
+    String? customerEmail,
+    String? customerName,
+    String? customerPhoneNo,
+    required String? paymentSlug,
+    required double orderAmount,
   }) async {
-    assert(cardNumber != null, 'card number must not be null');
-    assert(expiryMonth != null, 'card expiry month must not be null');
-    assert(expiryYear != null, 'card expiry year must not be null');
-    assert(securityCode != null, 'security code must not be null');
-    assert(paymentSlug != null, 'payment slug must not be null');
-    assert(orderAmount != null, 'transaction amount must not be null');
     _performChecks();
 
     CredoSdkRepository credoSdkRepository = CredoSdkRepository();
@@ -217,13 +204,10 @@ class CredoPlugin extends Equatable {
   /// throw  [CredoException] if any error is encountered
 
   Future<VerifyCardResponse> verifyCard({
-    @required String cardNumber,
-    @required String paymentSlug,
-    @required String orderCurrency,
+    required String cardNumber,
+    required String paymentSlug,
+    required String orderCurrency,
   }) async {
-    assert(cardNumber != null, 'cardNumber must not be null');
-    assert(paymentSlug != null, 'paymentSlug must not be null');
-    assert(orderCurrency != null, 'orderCurrency must not be null');
     _performChecks();
 
     CredoSdkRepository credoSdkRepository = CredoSdkRepository();

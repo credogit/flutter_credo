@@ -1,27 +1,27 @@
 import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
 class VerifyTransactionResponse extends ApiResponseModel {
-  int id;
-  String customerEmail;
-  String customerName;
-  String customerPhoneNo;
-  String customerUuid;
-  DateTime date;
-  String description;
-  int dueAmount;
-  int merchantImsId;
-  String merchantReferenceNo;
-  String processingFees;
-  String customerCharge;
-  String referenceNo;
-  double totalAmount;
-  DateTime updatedAt;
-  DateTime completedAt;
-  DateTime createdAt;
-  String approvalStatus;
-  String paymentChannel;
-  String paymentStatus;
-  String paymentOption;
+  int? id;
+  String? customerEmail;
+  String? customerName;
+  String? customerPhoneNo;
+  String? customerUuid;
+  DateTime? date;
+  String? description;
+  int? dueAmount;
+  int? merchantImsId;
+  String? merchantReferenceNo;
+  String? processingFees;
+  String? customerCharge;
+  String? referenceNo;
+  double? totalAmount;
+  late DateTime updatedAt;
+  late DateTime completedAt;
+  late DateTime createdAt;
+  String? approvalStatus;
+  String? paymentChannel;
+  String? paymentStatus;
+  String? paymentOption;
 
   Map<String, dynamic> toMap() {
     print(updatedAt.toIso8601String().split('.')[0]);

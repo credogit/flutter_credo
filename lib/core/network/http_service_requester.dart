@@ -1,34 +1,33 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_credo/core/constant/credo_constants.dart';
 
 class HttpServiceRequester with CredoConstants {
-  Dio dio;
+  late Dio dio;
 
   HttpServiceRequester() {
     this.dio = Dio();
   }
 
   Future<Response> post({
-    @required String endpoint,
-    String secretKey,
+    required String endpoint,
+    String? secretKey,
     dynamic body,
-    Map queryParam,
+    Map? queryParam,
   }) async {
     dio.options.headers = headers;
     dio.options.headers["Authorization"] = "$secretKey";
     Response response = await dio.post(
       baseUrl + endpoint,
       data: body,
-      queryParameters: queryParam,
+      queryParameters: queryParam as Map<String, dynamic>?,
     );
     return response;
   }
 
   Future<dynamic> getRequest({
-    @required String endpoint,
-    @required String secretKey,
-    @required Map queryParam,
+    required String endpoint,
+    required String secretKey,
+    required Map queryParam,
   }) async {
     dio.options.headers = headers;
     dio.options.headers["Authorization"] = "$secretKey";

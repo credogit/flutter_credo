@@ -11,8 +11,8 @@ import 'package:mockito/mockito.dart';
 class MockHttpServiceRequester extends Mock implements HttpServiceRequester {}
 
 main() {
-  MockHttpServiceRequester mockHttpServiceRequester;
-  CredoRemoteDataSourceImpl credoRemoteDataSourceImpl;
+  MockHttpServiceRequester? mockHttpServiceRequester;
+  late CredoRemoteDataSourceImpl credoRemoteDataSourceImpl;
   setUp(() {
     mockHttpServiceRequester = MockHttpServiceRequester();
     credoRemoteDataSourceImpl =
@@ -35,7 +35,7 @@ main() {
           "customerPhoneNo": '09039311229',
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/initiate',
             body: map,
             secretKey: 'xxxxxxxx',
@@ -44,6 +44,7 @@ main() {
           (_) async => Response(
             data: {'paymentLink': 'https://charlesarchibong.com'},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/initiate'),
           ),
         );
 
@@ -63,7 +64,11 @@ main() {
         expect(
           initPaymentResponseModel.toMap(),
           equals(
-            {'paymentLink': 'https://charlesarchibong.com'},
+            {
+              'paymentLink': 'https://charlesarchibong.com',
+              'paymentSlug': null,
+              'transRef': '1243'
+            },
           ),
         );
       });
@@ -84,7 +89,7 @@ main() {
           "customerPhoneNo": "2348012345678"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/3ds-pay',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
@@ -93,6 +98,7 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/card/third-party/3ds-pay'),
           ),
         );
 
@@ -134,7 +140,7 @@ main() {
           "paymentSlug": "0H0UOEsawNjkIxgspANd"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/pay',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
@@ -143,6 +149,7 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
+            request: RequestOptions(path: '/payments/card/third-party/pay'),
           ),
         );
 
@@ -171,7 +178,7 @@ main() {
 
     group('VerifyCardDetails', () {
       test(
-          'should return valid API response ($VerifyCardResponseModel) when the response status is = 200',
+          'should return valid API response ($VerifyCardResponse) when the response status is = 200',
           () async {
         Map map = {
           "cardNumber": "4242424242424242",
@@ -179,27 +186,31 @@ main() {
           "paymentSlug": "0H0UOEsawNjkIxgspANd"
         };
         when(
-          mockHttpServiceRequester.post(
+          mockHttpServiceRequester!.post(
             endpoint: 'payments/card/third-party/3ds-verify-card-number',
             body: map,
             secretKey: 'xxxxxxxxxxxxx',
           ),
-        ).thenAnswer(
-          (_) async => Response(
-            data: {
-              "orderId": "order-5reYwpe",
-              "transactionId": "8881038237uwe",
-              "gatewayCode": "string",
-              "gatewayRecommendation": "string",
-              "correlationId": "string",
-              "timeOfRecord": "string",
-              "redirectHtml": "string"
-            },
-            statusCode: 200,
+        ).thenReturn(
+          Future.value(
+            Response(
+              data: {
+                "orderId": "order-5reYwpe",
+                "transactionId": "8881038237uwe",
+                "gatewayCode": "string",
+                "gatewayRecommendation": "string",
+                "correlationId": "string",
+                "timeOfRecord": "string",
+                "redirectHtml": "string"
+              },
+              statusCode: 200,
+              request: RequestOptions(
+                  path: 'payments/card/third-party/3ds-verify-card-number'),
+            ),
           ),
         );
 
-        VerifyCardResponseModel verifyCardResponseModel =
+        VerifyCardResponse verifyCardResponseModel =
             await credoRemoteDataSourceImpl.verifyCardDetails(
           secretKey: "xxxxxxxxxxxxx",
           cardNumber: "4242424242424242",
@@ -250,16 +261,16 @@ main() {
           "paymentOption": {"name": "Regular"}
         };
         when(
-          mockHttpServiceRequester.getRequest(
+          mockHttpServiceRequester!.getRequest(
             endpoint: 'transactions/xxxxx124/verify',
             queryParam: {},
             secretKey: 'secretKey',
           ),
         ).thenAnswer(
           (_) async => Response(
-            data: map,
-            statusCode: 200,
-          ),
+              data: map,
+              statusCode: 200,
+              request: RequestOptions(path: '/transactions/xxxxx124/verify')),
         );
 
         VerifyTransactionResponse verifyTransactionResponseModel =

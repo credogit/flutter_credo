@@ -1,13 +1,13 @@
 import 'package:flutter_credo/src/data/models/api_response_model.dart';
 
-class VerifyCardResponseModel extends ApiResponseModel {
-  String orderId;
-  String transactionId;
-  String gatewayCode;
-  String gatewayRecommendation;
-  String correlationId;
-  String timeOfRecord;
-  String redirectionHtml;
+class VerifyCardResponse extends ApiResponseModel {
+  String? orderId;
+  String? transactionId;
+  String? gatewayCode;
+  String? gatewayRecommendation;
+  String? correlationId;
+  String? timeOfRecord;
+  String? redirectionHtml;
 
   Map<String, dynamic> toMap() {
     return {
@@ -21,7 +21,7 @@ class VerifyCardResponseModel extends ApiResponseModel {
     };
   }
 
-  VerifyCardResponseModel.fromMap(Map<String, dynamic> map) {
+  VerifyCardResponse.fromMap(Map<String, dynamic> map) {
     orderId = map['orderId'];
     transactionId = map['transactionId'];
     gatewayCode = map['gatewayCode'];
@@ -31,7 +31,7 @@ class VerifyCardResponseModel extends ApiResponseModel {
     redirectionHtml = map['redirectHtml'];
   }
 
-  VerifyCardResponseModel.fromErrorMap(Map<String, dynamic> map) {
+  VerifyCardResponse.fromErrorMap(Map<String, dynamic> map) {
     this.error = map['error'];
     this.status = map['status'];
     this.message = map['message'];
@@ -40,6 +40,6 @@ class VerifyCardResponseModel extends ApiResponseModel {
 
   @override
   String toString() {
-    return 'VerifyCardResponseModel(orderId: $orderId, transactionId: $transactionId, gatewayCode: $gatewayCode, gatewayRecommendation: $gatewayRecommendation, correlationId: $correlationId, timeOfRecord: $timeOfRecord, redirectionHtml: $redirectionHtml, error: $error, status: $status, message:$message, path:$path)';
+    return 'VerifyCardResponse(orderId: $orderId, transactionId: $transactionId, gatewayCode: $gatewayCode, gatewayRecommendation: $gatewayRecommendation, correlationId: $correlationId, timeOfRecord: $timeOfRecord, redirectionHtml: $redirectionHtml, error: $error, status: $status, message:$message, path:$path)';
   }
 }

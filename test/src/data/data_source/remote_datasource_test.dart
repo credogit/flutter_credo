@@ -44,7 +44,7 @@ main() {
           (_) async => Response(
             data: {'paymentLink': 'https://charlesarchibong.com'},
             statusCode: 200,
-            request: RequestOptions(path: '/payments/initiate'),
+            requestOptions: RequestOptions(path: '/payments/initiate'),
           ),
         );
 
@@ -98,7 +98,8 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
-            request: RequestOptions(path: '/payments/card/third-party/3ds-pay'),
+            requestOptions:
+                RequestOptions(path: '/payments/card/third-party/3ds-pay'),
           ),
         );
 
@@ -149,7 +150,8 @@ main() {
           (_) async => Response(
             data: {"transRef": "iy67f64hvc63"},
             statusCode: 200,
-            request: RequestOptions(path: '/payments/card/third-party/pay'),
+            requestOptions:
+                RequestOptions(path: '/payments/card/third-party/pay'),
           ),
         );
 
@@ -204,7 +206,7 @@ main() {
                 "redirectHtml": "string"
               },
               statusCode: 200,
-              request: RequestOptions(
+              requestOptions: RequestOptions(
                   path: 'payments/card/third-party/3ds-verify-card-number'),
             ),
           ),
@@ -270,7 +272,8 @@ main() {
           (_) async => Response(
               data: map,
               statusCode: 200,
-              request: RequestOptions(path: '/transactions/xxxxx124/verify')),
+              requestOptions:
+                  RequestOptions(path: '/transactions/xxxxx124/verify')),
         );
 
         VerifyTransactionResponse verifyTransactionResponseModel =

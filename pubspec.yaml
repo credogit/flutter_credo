@@ -1,9 +1,7 @@
 name: flutter_credo
-description: This library allows for the easy integration of [Credo] into your
-  Flutter application. It shoulders the burden of PCI compliance by sending
-  credit card details directly to our servers rather than to your server.
-version: 0.0.1
-homepage: https://github.com/charlesarchibong/flutter_credo
+description: This library allows for the easy integration of [Credo].
+version: 0.1.0
+homepage: https://github.com/charlesarchibong/flutter_credo.git
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

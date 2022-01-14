@@ -23,7 +23,7 @@ This library allows for the easy integration of [Credo] into your Flutter applic
 - To start using this package, simply add the following to project `pubspec.yaml`
 
 ```
-  flutter_credo: <lastes-version>
+  flutter_credo: <latest-version>
 ```
 
 ## Usage

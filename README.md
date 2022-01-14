@@ -137,7 +137,7 @@ After payment initialization, payment is made using the `pay` method
 
 After payment, you can call the `verifyTransaction` which returns `VerifyTransactionResponse` to verify the payment and confirm all is good. 
 
-you can check out the example on [this link](https://github.com/charlesarchibong/flutter_credo/tree/dev/example)
+you can check out the example on [this link](https://github.com/credogit/flutter_credo/tree/dev/example)
 	
 
 

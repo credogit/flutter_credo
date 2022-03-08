@@ -129,7 +129,7 @@ If the method call is successful, a `Webview to complete the payment` is returne
 
 After payment, you can call the `verifyTransaction` which returns `VerifyTransactionResponse` to verify the payment and confirm all is good.
 
-you can check out the example on [this link](https://github.com/credogit/flutter_credo/tree/dev/example)
+You can check out the example on [this link](https://github.com/credogit/flutter_credo/tree/dev/example)
 	
 
 
